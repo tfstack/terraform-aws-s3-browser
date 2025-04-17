@@ -41,3 +41,4 @@ module "s3_browser" {
     Name = "s3-browser-${random_string.suffix.result}"
   }
 }
+```
