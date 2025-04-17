@@ -67,7 +67,4 @@ jobs:
           git tag "$new_tag"
           git push origin "$new_tag"
 
-          git tag -f "v$major" "$new_tag"
-          git push -f origin "v$major"
-
           gh release create "$new_tag" --title "$new_tag" --notes-file changelog.txt
