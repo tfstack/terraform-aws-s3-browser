@@ -11,7 +11,6 @@ locals {
   )
 }
 
-
 ############################################
 # S3 BUCKET CONFIGURATION
 ############################################
@@ -56,7 +55,6 @@ resource "aws_s3_bucket_acl" "this" {
   ]
 }
 
-
 ############################################
 # STATIC WEBSITE HOSTING
 ############################################
@@ -75,7 +73,6 @@ resource "aws_s3_bucket_website_configuration" "this" {
   }
 }
 
-
 ############################################
 # BUCKET POLICY & CORS
 ############################################
@@ -88,10 +85,10 @@ resource "aws_s3_bucket_policy" "this" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid       = "AllowListAndGet",
-        Effect    = "Allow",
-        Action    = ["s3:ListBucket", "s3:GetObject"],
-        Resource  = [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"],
+        Sid      = "AllowListAndGet",
+        Effect   = "Allow",
+        Action   = ["s3:ListBucket", "s3:GetObject"],
+        Resource = [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"],
         Principal = {
           AWS = join(",", var.s3_config.allowed_principals)
         }
@@ -114,7 +111,6 @@ resource "aws_s3_bucket_cors_configuration" "this" {
     expose_headers  = ["ETag", "x-amz-meta-custom-header"]
   }
 }
-
 
 ############################################
 # STATIC CONTENT UPLOADS
@@ -142,35 +138,34 @@ resource "aws_s3_object" "this" {
   source = "${var.s3_config.source_file_path}/${each.value}"
 
   content_type = lookup({
-    ".avi" = "video/x-msvideo",
-    ".css" = "text/css",
-    ".csv" = "text/csv",
-    ".eot" = "application/vnd.ms-fontobject",
-    ".gif" = "image/gif",
-    ".gz" = "application/gzip",
-    ".html" = "text/html",
-    ".jpeg" = "image/jpeg",
-    ".jpg" = "image/jpeg",
-    ".js" = "application/javascript",
-    ".json" = "application/json",
-    ".mp3" = "audio/mpeg",
-    ".mp4" = "video/mp4",
-    ".ogg" = "audio/ogg",
-    ".pdf" = "application/pdf",
-    ".png" = "image/png",
-    ".svg" = "image/svg+xml",
-    ".tar" = "application/x-tar",
-    ".ttf" = "font/ttf",
-    ".txt" = "text/plain",
-    ".wav" = "audio/wav",
-    ".webm" = "video/webm",
-    ".woff" = "font/woff",
+    ".avi"   = "video/x-msvideo",
+    ".css"   = "text/css",
+    ".csv"   = "text/csv",
+    ".eot"   = "application/vnd.ms-fontobject",
+    ".gif"   = "image/gif",
+    ".gz"    = "application/gzip",
+    ".html"  = "text/html",
+    ".jpeg"  = "image/jpeg",
+    ".jpg"   = "image/jpeg",
+    ".js"    = "application/javascript",
+    ".json"  = "application/json",
+    ".mp3"   = "audio/mpeg",
+    ".mp4"   = "video/mp4",
+    ".ogg"   = "audio/ogg",
+    ".pdf"   = "application/pdf",
+    ".png"   = "image/png",
+    ".svg"   = "image/svg+xml",
+    ".tar"   = "application/x-tar",
+    ".ttf"   = "font/ttf",
+    ".txt"   = "text/plain",
+    ".wav"   = "audio/wav",
+    ".webm"  = "video/webm",
+    ".woff"  = "font/woff",
     ".woff2" = "font/woff2",
-    ".xml" = "application/xml",
-    ".zip" = "application/zip"
+    ".xml"   = "application/xml",
+    ".zip"   = "application/zip"
   }, regex("\\.[^.]+$", each.value), "application/octet-stream")
 }
-
 
 ############################################
 # LOGGING CONFIGURATION

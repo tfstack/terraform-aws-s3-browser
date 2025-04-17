@@ -28,8 +28,8 @@ module "s3_browser" {
     bucket_name          = "s3-browser"
     bucket_suffix        = random_string.suffix.result
     enable_force_destroy = true
-    source_file_path   = "${path.module}/external"
-    allowed_principals = ["*"]
+    source_file_path     = "${path.module}/external"
+    allowed_principals   = ["*"]
   }
 
   logging_config = {
